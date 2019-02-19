@@ -49,19 +49,71 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
             bool crouch = Input.GetKey(KeyCode.C);
+            bool fps = Input.GetKey("z");
+            int count = 0;
+            Vector3 camrot = transform.rotation.eulerAngles;
 
             // calculate move direction to pass to character
             if (m_Cam != null)
             {
-                // calculate camera relative direction to move:
-                m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-                m_Move = v*m_CamForward + h*m_Cam.right;
+                /*
+                if (fps)
+                {
+                    if (count < 1)
+                    {
+                        m_Cam.rotation = Quaternion.Euler(camrot + new Vector3(-24, 0, 0));
+                        camrot = m_Cam.rotation.eulerAngles;
+                        count++;
+                    }
+                    m_Cam.position = transform.position + new Vector3(0, (float).5, (float).5);
+                    int range = 35;
+                    float xangle = m_Cam.localEulerAngles.x;
+                    xangle = (xangle > 180) ? xangle - 360 : xangle;
+                    float yangle = m_Cam.localEulerAngles.y;
+                    yangle = (yangle > 180) ? yangle - 360 : yangle;
+                    if (Input.GetKey("up") && xangle >= -range)
+                    {
+                        m_Cam.rotation = Quaternion.Euler(camrot + new Vector3(-1, 0, 0));
+                        camrot = m_Cam.rotation.eulerAngles;
+                    }
+                    //if (Input.GetKey("right") && yangle <= range)
+                    if (Input.GetKey("right"))
+                    {
+                        m_Cam.rotation = Quaternion.Euler(camrot + new Vector3(0, 1, 0));
+                        camrot = m_Cam.rotation.eulerAngles;
+                    }
+                    //if (Input.GetKey("left") && yangle >= -range)
+                    if (Input.GetKey("left"))
+                    {
+                        m_Cam.rotation = Quaternion.Euler(camrot + new Vector3(0, -1, 0));
+                        camrot = m_Cam.rotation.eulerAngles;
+                    }
+                    if (Input.GetKey("down") && xangle <= range)
+                    {
+                        m_Cam.rotation = Quaternion.Euler(camrot + new Vector3(1, 0, 0));
+                        camrot = m_Cam.rotation.eulerAngles;
+                    }
+                }
+                else
+                {
+                    // calculate camera relative direction to move:
+                    /*
+                    if(count > 0)
+                    {
+                        transform.position = transform.position - (transform.forward * 5) + new Vector3(0,5,0);
+                        count = 0;
+                    }
+                    */
+                    m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+                    m_Move = v * m_CamForward + h * m_Cam.right;
             }
             else
             {
                 // we use world-relative directions in the case of no main camera
-                m_Move = v*Vector3.forward + h*Vector3.right;
+
+                    m_Move = v * Vector3.forward + h * Vector3.right;
             }
+     
 #if !MOBILE_INPUT
 			// walk speed multiplier
 	        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
