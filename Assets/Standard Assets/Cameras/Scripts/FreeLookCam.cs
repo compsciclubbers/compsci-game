@@ -78,7 +78,7 @@ namespace UnityStandardAssets.Cameras
 
             // Adjust the look angle by an amount proportional to the turn speed and horizontal input.
             m_LookAngle += x*m_TurnSpeed;
-
+            print(m_LookAngle);
             // Rotate the rig (the root object) around Y axis only:
             m_TransformTargetRot = Quaternion.Euler(0f, m_LookAngle, 0f);
 
