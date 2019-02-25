@@ -64,7 +64,7 @@ public class stickymagnet : MonoBehaviour
     }
     void OnCollisionEnter(Collision c)
     {
-        if (!have && c.gameObject.tag == "player") 
+        if (!have && c.gameObject.tag == "Player") 
         {
             Destroy(rb.GetComponent<FixedJoint>());
             holder = c.gameObject;
