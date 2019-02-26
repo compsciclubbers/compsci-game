@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,41 +20,31 @@ public class StickyObject : MonoBehaviour
 
 public class straight : StickyObject
 {
-    //private int moveSpeed = 1;
-    //private bool hit = false;
-    //private int count = 0;
+    private float startx;
+    private float starty;
+    private float startz;
     void Start()
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        startx = rb.transform.position.x;
+        starty = rb.transform.position.y;
+        startz = rb.transform.position.z;
         rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints.None;
         //rb.AddForce(0, 0, 2000);
         rb.AddForce(transform.forward * 2000);
     }
-    /*
-    void OnCollisionEnter()
-    {
-        hit = true;
-    }
-        // Update is called once per frame
     void Update()
     {
-        if (!hit)
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        float x = rb.transform.position.x;
+        float y = rb.transform.position.y;
+        float z = rb.transform.position.z;
+        if(Math.Abs(x - startx) + Math.Abs(y - starty) + Math.Abs(z - startz) > 800)
         {
-            //transform.position += transform.forward * moveSpeed;
-            transform.position += transform.forward;
-            print("moving" + hit);
-        }
-
-        else if (count < 10) 
-        {
-            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            count++;
-            print("frozen" + hit);
+            Destroy(gameObject);
         }
     }
-    */
-    
+
 
 }
