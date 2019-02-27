@@ -98,6 +98,7 @@ public class cactusgun : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    /*
     void OnCollisionEnter(Collision c)
     {
         if (!have)
@@ -115,4 +116,5 @@ public class cactusgun : MonoBehaviour
             bc.isTrigger = true;
         }
     }
+   */
 }

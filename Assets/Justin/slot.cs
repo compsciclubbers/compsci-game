@@ -1,18 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerClickHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool empty;
+    public Sprite icon;
+    public int id;
+    public string type;
+    public string description;
+    public GameObject item;
+    private Transform slotIconGo;
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerClick(PointerEventData pointerEventData)
     {
-        
+        item.GetComponent<Item>().itemUsage();
+    }
+    private void Start()
+    {
+        slotIconGo = transform.GetChild(0);
+    }
+    public void updateSlot()
+    {
+        slotIconGo.GetComponent<Image>().sprite = icon;
     }
 }

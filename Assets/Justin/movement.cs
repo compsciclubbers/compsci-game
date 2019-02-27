@@ -20,7 +20,7 @@ public class movement : MonoBehaviour
     {
         startTime2 = Time.time - 2.5;
         startTime = Time.time - .5;
-        gameObject.tag = "player";
+        gameObject.tag = "Player";
     }
 
     // Update is called once per frame

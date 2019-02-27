@@ -10,34 +10,38 @@ public class stickymagnet : MonoBehaviour
     private bool have = false;
     private GameObject holder;
     public GameObject camera;
+    private bool tpressed = false;
     // Start is called before the first frame update
     void Start()
     {
         setGravity();
+        GetComponent<Rigidbody>().isKinematic = true ;
+        GetComponent<SphereCollider>().isTrigger = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (have)
+        /*
+        if (Input.GetKey("z"))
         {
-            Vector3 temp = new Vector3(1f, 1f, 0f);
-            transform.position = holder.transform.position + temp;
-            transform.rotation = holder.transform.rotation;
-            Destroy(rb.GetComponent<FixedJoint>());
-            if (Input.GetKey("z"))
-            {
-                transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles + new Vector3(-90, 0, -90));
-                transform.position = holder.transform.position + new Vector3((float).5, (float).5, 0);
-            }
+            transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles + new Vector3(-90, 0, -90));
+            transform.position = holder.transform.position + new Vector3((float).5, (float).5, 0);
         }
-        else
-        {
+        */
+        //else
+        //{
+        if(tpressed)
             useGravity();
-        }
-        if (have && Input.GetKey("t"))
+        //}
+        if (Input.GetKey("t"))
         {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.AddForce(0, 200, 150);
+            GetComponent<SphereCollider>().isTrigger = false;
+            tpressed = true;
+            /*
             if (Input.GetKey("z"))
             {
                 Vector3 temp = camera.transform.forward * 2500;
@@ -45,9 +49,10 @@ public class stickymagnet : MonoBehaviour
             }
             else
             {
-                rb.AddForce(0, 2000, 1500);                
+                              
             }
             have = false;
+            */
 
         }
     }
@@ -62,8 +67,10 @@ public class stickymagnet : MonoBehaviour
         Vector3 g = globalGravity * gravityScale * Vector3.up;
         rb.AddForce(g, ForceMode.Acceleration);
     }
+    
     void OnCollisionEnter(Collision c)
     {
+        /*
         if (!have && c.gameObject.tag == "Player") 
         {
             Destroy(rb.GetComponent<FixedJoint>());
@@ -79,8 +86,9 @@ public class stickymagnet : MonoBehaviour
         }
         else
         {
-            gameObject.AddComponent<FixedJoint>();
-            gameObject.GetComponent<FixedJoint>().connectedBody = c.rigidbody;
-        }
+         */
+        gameObject.AddComponent<FixedJoint>();
+        gameObject.GetComponent<FixedJoint>().connectedBody = c.rigidbody;
     }
-}
+   
+    }
