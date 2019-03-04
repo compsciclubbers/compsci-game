@@ -55,7 +55,7 @@ public class inventoryScript : MonoBehaviour
                 slot[i].GetComponent<Slot>().item = itemPickedUp;
                 itemPickedUp.transform.parent = slot[i].transform;
                 itemPickedUp.SetActive(false);
-
+                print(slot[i].GetComponent<Slot>().icon);
                 slot[i].GetComponent<Slot>().updateSlot();
                 slot[i].GetComponent<Slot>().empty = false;
                 return;
