@@ -25,6 +25,7 @@ public class Item : MonoBehaviour
             {
                 if (itemManager.transform.GetChild(i).gameObject.GetComponent<Item>().id == id)
                 {
+                    print("A");
                     item = itemManager.transform.GetChild(i).gameObject;
                 }
             }
@@ -44,7 +45,7 @@ public class Item : MonoBehaviour
                     Transform itT = transform;
                     Vector3 ipos = itT.position;
                     Vector3 idir = itT.right;
-                    Quaternion irot = itT.rotation * Quaternion.Euler(0,90,90);
+                    Quaternion irot = itT.rotation * Quaternion.Euler(0,90,0);
                     float spawnDistance = 3;
                     Vector3 spawnp = ipos + idir * spawnDistance;
                     Instantiate(helperItem, spawnp, irot);
@@ -65,6 +66,7 @@ public class Item : MonoBehaviour
         {
             itemManager.transform.GetChild(i).gameObject.SetActive(false);
         }
+        print(item);
         item.SetActive(true);
         item.GetComponent<Item>().equipped = true;
     }
