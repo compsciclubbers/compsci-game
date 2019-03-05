@@ -15,20 +15,24 @@ public class stickymagnet : MonoBehaviour
     void Start()
     {
         setGravity();
-        GetComponent<Rigidbody>().isKinematic = true ;
-        GetComponent<SphereCollider>().isTrigger = true;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.AddForce(1000 * transform.forward);
+        rb.AddForce(0,2000,0);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        useGravity();
+
         /*
         if (Input.GetKey("z"))
         {
             transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles + new Vector3(-90, 0, -90));
             transform.position = holder.transform.position + new Vector3((float).5, (float).5, 0);
         }
-        */
+        
         //else
         //{
         if(tpressed)
@@ -53,8 +57,6 @@ public class stickymagnet : MonoBehaviour
             }
             have = false;
             */
-
-        }
     }
 
     void setGravity()

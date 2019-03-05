@@ -25,7 +25,6 @@ public class Item : MonoBehaviour
             {
                 if (itemManager.transform.GetChild(i).gameObject.GetComponent<Item>().id == id)
                 {
-                    print("A");
                     item = itemManager.transform.GetChild(i).gameObject;
                 }
             }
@@ -37,9 +36,9 @@ public class Item : MonoBehaviour
     {
         if (equipped)
         {
-            if(type == "cactusgun")
-            {
-                double curr = Time.time - startTime;
+            double curr = Time.time - startTime;
+            if (type == "cactusgun")
+            {   
                 if (Input.GetKey("g") && curr > .5)
                 {
                     Transform itT = transform;
@@ -54,7 +53,13 @@ public class Item : MonoBehaviour
             }
             if(type == "stickymagnet")
             {
-
+                if (Input.GetKey("g") && curr > .5)
+                {
+                    float spawnDistance = 3;
+                    GameObject spawned = Instantiate(helperItem, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().position + transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().forward * 3, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().rotation);
+                    spawned.SetActive(true);
+                    startTime = Time.time;
+                }
             }
         }
     }
