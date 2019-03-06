@@ -67,7 +67,7 @@ public class inventoryScript : MonoBehaviour
                 startTime = Time.time;
             }
 
-            if (Input.GetKey("return") && slot[currIndex].transform.GetChildCount() > 1)
+            if (Input.GetKey("return") && slot[currIndex].transform.childCount > 1)
             { 
                 slot[currIndex].transform.GetChild(1).gameObject.GetComponent<Item>().itemUsage();
             }
