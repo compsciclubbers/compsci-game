@@ -14,8 +14,16 @@ public class Item : MonoBehaviour
     private GameObject itemManager;
     public GameObject helperItem;
     private double startTime;
+    private string key;
+    bool placed;
+    Transform player;
+    Vector3 playerPos;
     void Start()
     {
+        placed = false;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerPos = transform.localPosition;
+        key = "e";
         startTime = Time.time - .5;
         itemManager = GameObject.FindWithTag("Item Manager");
         if (!equipped)
@@ -39,7 +47,7 @@ public class Item : MonoBehaviour
             double curr = Time.time - startTime;
             if (type == "cactusgun")
             {   
-                if (Input.GetKey("g") && curr > .5)
+                if (Input.GetKey(key) && curr > .5)
                 {
                     Transform itT = transform;
                     Vector3 ipos = itT.position;
@@ -47,17 +55,50 @@ public class Item : MonoBehaviour
                     Quaternion irot = itT.rotation * Quaternion.Euler(0,90,0);
                     float spawnDistance = 3;
                     Vector3 spawnp = ipos + idir * spawnDistance;
-                    Instantiate(helperItem, spawnp, irot);
+                    GameObject spawned = Instantiate(helperItem, spawnp, irot);
+                    spawned.SetActive(true);
                     startTime = Time.time;
                 }
             }
             if(type == "stickymagnet")
             {
-                if (Input.GetKey("g") && curr > .5)
+                if (Input.GetKey(key) && curr > .5)
                 {
                     float spawnDistance = 3;
                     GameObject spawned = Instantiate(helperItem, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().position + transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().forward * 3, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().rotation);
                     spawned.SetActive(true);
+                    startTime = Time.time;
+                }
+            }
+            if(type == "sword")
+            {
+                if (Input.GetKey(key) && curr > .5)
+                {
+                    
+                    startTime = Time.time;
+                }
+            }
+            if(type == "shield")
+            {
+                
+                if (Input.GetKey(key) && curr > .5)
+                {
+                    if (!placed)
+                    {
+                        GetComponent<BoxCollider>().isTrigger = false;
+                        transform.parent = null;
+                        GetComponent<Rigidbody>().useGravity = true;
+                        placed = true;
+                    }
+                    else
+                    {
+                        GetComponent<BoxCollider>().isTrigger = true;
+                        GetComponent<Rigidbody>().useGravity = false;
+                        transform.parent = itemManager.transform;
+                        transform.localPosition = playerPos;
+                        transform.rotation = player.rotation;
+                        placed = false;
+                    }
                     startTime = Time.time;
                 }
             }
@@ -71,7 +112,6 @@ public class Item : MonoBehaviour
         {
             itemManager.transform.GetChild(i).gameObject.SetActive(false);
         }
-        print(item);
         item.SetActive(true);
         item.GetComponent<Item>().equipped = true;
     }

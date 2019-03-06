@@ -66,10 +66,7 @@ public class inventoryScript : MonoBehaviour
                 }
                 startTime = Time.time;
             }
-            if (Input.GetKey("return"))
-            {
-                print(currIndex);
-            }
+
             if (Input.GetKey("return") && slot[currIndex].transform.GetChildCount() > 1)
             { 
                 slot[currIndex].transform.GetChild(1).gameObject.GetComponent<Item>().itemUsage();
@@ -104,7 +101,6 @@ public class inventoryScript : MonoBehaviour
                 slot[i].GetComponent<Slot>().item = itemPickedUp;
                 itemPickedUp.transform.parent = slot[i].transform;
                 itemPickedUp.SetActive(false);
-                print(slot[i].GetComponent<Slot>().icon);
                 slot[i].GetComponent<Slot>().updateSlot();
                 slot[i].GetComponent<Slot>().empty = false;
                 return;

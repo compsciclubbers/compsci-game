@@ -16,8 +16,8 @@ public class stickymagnet : MonoBehaviour
     {
         setGravity();
         Rigidbody rb = GetComponent<Rigidbody>();
-        rb.AddForce(1000 * transform.forward);
-        rb.AddForce(0,2000,0);
+        rb.AddForce(2500 * transform.forward);
+        rb.AddForce(0,200,0);
 
     }
 
@@ -91,6 +91,7 @@ public class stickymagnet : MonoBehaviour
          */
         gameObject.AddComponent<FixedJoint>();
         gameObject.GetComponent<FixedJoint>().connectedBody = c.rigidbody;
+        GetComponent<SphereCollider>().isTrigger = true;
     }
    
     }

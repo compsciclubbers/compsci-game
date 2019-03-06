@@ -9,6 +9,7 @@ TagManager:
   - Shadow
   - Collide
   - player
+  - Ground
   layers:
   - Default
   - TransparentFX
