@@ -18,6 +18,8 @@ public class Item : MonoBehaviour
     bool placed;
     Transform player;
     Vector3 playerPos;
+    Animator anim;
+    private bool isSwinging = false;
     void Start()
     {
         placed = false;
@@ -38,7 +40,6 @@ public class Item : MonoBehaviour
             }
         }
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -72,9 +73,13 @@ public class Item : MonoBehaviour
             }
             if(type == "sword")
             {
+                print("sword");
+                isSwinging = anim.GetCurrentAnimatorStateInfo(0).IsName("Swing");
                 if (Input.GetKey(key) && curr > .5)
                 {
-                    
+                    print("swing");
+                    anim = GetComponent<Animator>();
+                    anim.Play("Swing", -1, 0f);
                     startTime = Time.time;
                 }
             }
@@ -116,5 +121,13 @@ public class Item : MonoBehaviour
         item.GetComponent<Item>().equipped = true;
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Enemy" && type == "sword" && isSwinging == true)
+        {
+            print("hit");
+        }
+    }
+
+
 }

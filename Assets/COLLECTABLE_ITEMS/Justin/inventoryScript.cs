@@ -83,7 +83,10 @@ public class inventoryScript : MonoBehaviour
         {
             GameObject itemPickedUp = other.gameObject;
             Item item = itemPickedUp.GetComponent<Item>();
-            addItem(itemPickedUp, item.id, item.type, item.description, item.icon);
+            if (GameObject.FindWithTag("Item Manager").transform.GetChild(0).GetComponent<Item>().type != item.type)
+            {
+                addItem(itemPickedUp, item.id, item.type, item.description, item.icon);
+            }
         }
     }
 
