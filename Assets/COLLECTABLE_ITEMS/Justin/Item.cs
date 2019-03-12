@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Item : MonoBehaviour
 {
@@ -74,11 +75,12 @@ public class Item : MonoBehaviour
             if(type == "sword")
             {
                 print("sword");
+                anim = GetComponent<Animator>();
                 isSwinging = anim.GetCurrentAnimatorStateInfo(0).IsName("Swing");
                 if (Input.GetKey(key) && curr > .5)
                 {
                     print("swing");
-                    anim = GetComponent<Animator>();
+  
                     anim.Play("Swing", -1, 0f);
                     startTime = Time.time;
                 }
@@ -88,16 +90,20 @@ public class Item : MonoBehaviour
                 
                 if (Input.GetKey(key) && curr > .5)
                 {
+                    Vector3 itpos = transform.position;
+                    Vector3 itmanpos = itemManager.transform.position;
                     if (!placed)
                     {
                         GetComponent<BoxCollider>().isTrigger = false;
                         transform.parent = null;
                         GetComponent<Rigidbody>().useGravity = true;
+                        GetComponent<Rigidbody>().freezeRotation = true;
                         placed = true;
-                    }
-                    else
+                    }   
+                    else if(Math.Abs(itpos.x - itmanpos.x) + Math.Abs(itpos.y - itmanpos.y) + Math.Abs(itpos.z - itmanpos.z) < 7)
                     {
                         GetComponent<BoxCollider>().isTrigger = true;
+                        GetComponent<Rigidbody>().useGravity = false;
                         GetComponent<Rigidbody>().useGravity = false;
                         transform.parent = itemManager.transform;
                         transform.localPosition = playerPos;
@@ -116,6 +122,11 @@ public class Item : MonoBehaviour
         for (int i = 0; i < allItems; i++)
         {
             itemManager.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        if (GameObject.FindWithTag("Shield") != null)
+        {
+            GameObject.FindWithTag("Shield").transform.parent = itemManager.transform;
+            GameObject.FindWithTag("Shield").SetActive(false);
         }
         item.SetActive(true);
         item.GetComponent<Item>().equipped = true;
