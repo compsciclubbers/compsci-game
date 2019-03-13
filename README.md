@@ -14,7 +14,7 @@ This is our 3rd quarter Advanced Computer Studies project.
   - Right-click on your Desktop and select `Git Bash Here`
   - Run `git clone https://github.com/compsciclubbers/compsci-game.git`
   - Change directory into the newly created `compsci-game` folder using `cd compsci-game`
-1. Install Git LFS: `git install lfs`
+1. Install Git LFS: `git lfs install`
 1. Pull Git LFS files: `git lfs pull`
 1. Open the project in Unity (`Open -> Desktop -> compsci-game`)
 
