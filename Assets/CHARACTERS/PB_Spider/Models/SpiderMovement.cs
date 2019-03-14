@@ -12,26 +12,29 @@ public class SpiderMovement : MonoBehaviour
 
     void Update()
     {
-
         // if ((target.transform.position - this.transform.position).sqrMagnitude < distanceUntilChase)
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Speed);
             transform.LookAt(target.transform);
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag != "Ground")
+        if (collision.gameObject.tag == "Player")
+        {
+            GetComponent<Rigidbody>().AddForce(0, 200, 0);
+            GetComponent<Rigidbody>().AddForce(transform.forward * -200);
+        }
+        else if (collision.gameObject.tag != "Ground")
         {
             jumpOverObstacle();
         }
-        else if(collision.gameObject.tag == "Player")
-        {
-            transform.position = transform.forward * -1 * (float)Speed + transform.position;
-        }
+        
+        
     }
 
     private void jumpOverObstacle()
     {
-        transform.position = transform.up * (float)Speed * 20 + transform.position;
+        GetComponent<Rigidbody>().AddForce(0, 500, 0);
     }
 }
