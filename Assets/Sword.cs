@@ -15,12 +15,4 @@ public class Sword : MonoBehaviour
     {
         Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(), gameObject.GetComponent<Collider>());
     }
-    void OnTriggerEnter(Collision collision)
-    {
-        print("Collision ahhhh");
-        if (collision.gameObject.tag == "Player")
-        {
-            Physics.IgnoreCollision(collision.collider, gameObject.GetComponent<BoxCollider>());
-        }
-    }
 }

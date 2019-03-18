@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Shield
   - Subinventory
+  - Enemy
   layers:
   - Default
   - TransparentFX

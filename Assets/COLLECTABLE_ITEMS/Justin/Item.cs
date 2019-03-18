@@ -131,7 +131,7 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Enemy" && type == "sword" && isSwinging == true)
+        if(other.gameObject.tag == "Enemy" && type == "sword" && isSwinging)
         {
             print("hit");
         }
