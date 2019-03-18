@@ -49,7 +49,7 @@ public class Item : MonoBehaviour
             double curr = Time.time - startTime;
             if (type == "cactusgun")
             {   
-                if (Input.GetKey(key) && curr > .5)
+                if (Input.GetMouseButtonDown(0) && curr > .5)
                 {
                     Transform itT = transform;
                     Vector3 ipos = itT.position;
@@ -64,7 +64,7 @@ public class Item : MonoBehaviour
             }
             if(type == "stickymagnet")
             {
-                if (Input.GetKey(key) && curr > .5)
+                if (Input.GetMouseButtonDown(0) && curr > .5)
                 {
                     float spawnDistance = 3;
                     GameObject spawned = Instantiate(helperItem, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().position + transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().forward * 3, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().rotation);
@@ -74,13 +74,10 @@ public class Item : MonoBehaviour
             }
             if(type == "sword")
             {
-                print("sword");
                 anim = GetComponent<Animator>();
                 isSwinging = anim.GetCurrentAnimatorStateInfo(0).IsName("Swing");
-                if (Input.GetKey(key) && curr > .5)
+                if (Input.GetMouseButtonDown(0) && curr > .5)
                 {
-                    print("swing");
-  
                     anim.Play("Swing", -1, 0f);
                     startTime = Time.time;
                 }
@@ -88,7 +85,7 @@ public class Item : MonoBehaviour
             if(type == "shield")
             {
                 
-                if (Input.GetKey(key) && curr > .5)
+                if (Input.GetMouseButtonDown(0) && curr > .5)
                 {
                     Vector3 itpos = transform.position;
                     Vector3 itmanpos = itemManager.transform.position;
