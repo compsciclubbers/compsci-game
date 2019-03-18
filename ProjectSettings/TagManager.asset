@@ -10,6 +10,8 @@ TagManager:
   - Collide
   - player
   - Ground
+  - Shield
+  - Subinventory
   layers:
   - Default
   - TransparentFX
@@ -21,10 +23,10 @@ TagManager:
   - 
   - TempCast
   - Walkable
-  - 
-  - 
-  - 
-  - 
+  - Sword
+  - Shield
+  - Enemy
+  - Player
   - 
   - 
   - 
