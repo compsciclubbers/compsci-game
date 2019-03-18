@@ -10,11 +10,14 @@ public class SpiderMovement : MonoBehaviour
     public float Speed;
     public float distanceUntilChase;
 
+    private void Start()
+    {
+        Speed = Speed * Time.deltaTime;
+    }
     void Update()
     {
-        // if ((target.transform.position - this.transform.position).sqrMagnitude < distanceUntilChase)
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Speed);
-            transform.LookAt(target.transform);
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Speed);
+        transform.LookAt(target.transform);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
     }
 
@@ -27,14 +30,7 @@ public class SpiderMovement : MonoBehaviour
         }
         else if (collision.gameObject.tag != "Ground")
         {
-            jumpOverObstacle();
-        }
-        
-        
-    }
 
-    private void jumpOverObstacle()
-    {
-        GetComponent<Rigidbody>().AddForce(0, 500, 0);
+        }
     }
 }
