@@ -16,6 +16,7 @@ public class Item : MonoBehaviour
     public GameObject helperItem;
     private double startTime;
     private string key;
+    private int sworddmg;
     bool placed;
     Transform player;
     Vector3 playerPos;
@@ -23,6 +24,7 @@ public class Item : MonoBehaviour
     private bool isSwinging = false;
     void Start()
     {
+        sworddmg = 2;
         placed = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerPos = transform.localPosition;
@@ -131,9 +133,17 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Enemy" && type == "sword" && isSwinging)
+        if(other.gameObject.tag == "Enemy" && type == "sword")
         {
+            print("enemy");
+        }
+        if(other.gameObject.tag == "Enemy" && type == "sword" && isSwinging && Time.time - startTime > 0.5)
+        {
+            DamagableEntity enemy = other.gameObject.GetComponent<DamagableEntity>();
+            enemy.incomingDmg = sworddmg;
+            enemy.damage();
             print("hit");
+            startTime = Time.time;
         }
     }
 

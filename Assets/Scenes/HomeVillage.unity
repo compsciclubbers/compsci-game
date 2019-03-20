@@ -305,6 +305,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 292553862}
+--- !u!114 &45596271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45596258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b5d811b6f455d42b999361e63b2afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 20
+  attdmg: 1
+  type: player
+  isDead: 0
+  isHit: 0
+  self: {fileID: 0}
+  incomingDmg: 0
 --- !u!1001 &72120998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -602,7 +621,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 71
+  m_RootOrder: 72
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &108692670
 PrefabInstance:
@@ -2165,7 +2184,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!4 &335663913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 49a0e923d39ec3c4c8bb97699e2f2903,
@@ -3773,6 +3792,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 87fc28ab9030348408fe3d9c87b9bd2a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 87fc28ab9030348408fe3d9c87b9bd2a, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 87fc28ab9030348408fe3d9c87b9bd2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8007,6 +8030,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: spider
       objectReference: {fileID: 0}
+    - target: {fileID: 100100, guid: f5a9bd478ca094495a4520e37f57420d, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100100, guid: f5a9bd478ca094495a4520e37f57420d, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 400100, guid: f5a9bd478ca094495a4520e37f57420d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 97.9
@@ -8086,7 +8117,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 16
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1873980887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8099,8 +8130,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e3a842a6039f348b7263416d0e0d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 10
+  attdmg: 2
+  type: Spider
+  isDead: 0
+  isHit: 0
+  self: {fileID: 0}
+  incomingDmg: 0
   target: {fileID: 45596258}
-  Speed: 0.08
+  Speed: 4
   distanceUntilChase: 100
 --- !u!65 &1873980888
 BoxCollider:
@@ -8115,6 +8153,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5794673, y: 2.679398, z: 3.0434704}
   m_Center: {x: -0.0014811453, y: 0.8905874, z: 0.03783817}
+--- !u!65 &1873980891
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873980885}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.31, y: 3.92, z: 4.05}
+  m_Center: {x: 0, y: 0.73, z: 0.43}
 --- !u!1001 &1884639386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8767,8 +8818,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.23274353, y: 0.84994435, z: 0.20699869}
-  m_Center: {x: -0.03824042, y: 0.5813161, z: 0.008389751}
+  m_Size: {x: 0.4155685, y: 1.6759934, z: 0.20699869}
+  m_Center: {x: -0.0024809851, y: 0.9943488, z: 0.008387064}
 --- !u!95 &2002819315
 Animator:
   serializedVersion: 3

@@ -40,7 +40,6 @@ public class inventoryScript : MonoBehaviour
     {
         if (Input.GetKeyDown("i"))
         {
-            print("inv");
             inventory.SetActive(!inventory.active);
             subinventory.SetActive(!subinventory.active);
         }
@@ -87,7 +86,6 @@ public class inventoryScript : MonoBehaviour
                 {
                     swap[1] = swap[0];
                     swap[0] = slot[currIndex].transform.GetComponent<Slot>().icon;
-                    print(swap[0]);
                     GameObject temp = sub[0];
                     sub[0] = sub[1];
                     sub[1] = temp;

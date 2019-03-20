@@ -2,47 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : DamagableEntity
+
+public class DamagableEntity : MonoBehaviour
 {
     public int hp;
     public int attdmg;
     public string type;
-    public Entity(int c_hp, int c_attdmg, string c_type)
+    public bool isDead;
+    public bool isHit;
+    public GameObject self;
+    public int incomingDmg; 
+    public DamagableEntity(int c_hp, int c_attdmg, string c_type)
     {
         hp = c_hp;
         attdmg = c_attdmg;
         type = c_type;
+        isDead = false;
+        incomingDmg = 0;
+        isHit = false;
     }
-    // Start is called before the first frame update
-    void Start()
+    public void damage()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
-
-public abstract class DamagableEntity
-{
-    public void damage(int attdmg, int hp, GameObject self)
-    {
-        if(hp - attdmg <= 0)
+        isHit = true;
+        if(hp - incomingDmg <= 0)
         {
             hp = 0;
-            die(self);
+            isDead = true;
         }
         else
         {
-            hp -= attdmg;
+            hp -= incomingDmg;
+            print(type + " hp: " + hp);
         }
-
     }
-    private void die(GameObject self)
+    public void dealDamage(GameObject reciever)
     {
-        self.SetActive(false);
+        isHit = true;
+        DamagableEntity rec = reciever.GetComponent<DamagableEntity>();
+        rec.incomingDmg = attdmg;
+        rec.damage();
     }
+    public bool getDead()
+    {
+        return isDead;
+    }
+    public bool getHit()
+    {
+        return isHit;
+    }
+    public void setHit(bool hit)
+    {
+        isHit = hit;
+    }
+
 }
