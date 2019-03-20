@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator _animator;
 
-    private CharacterController _characterController;
+    private UnityEngine.CharacterController _characterController;
 
     private float Gravity = 20.0f;
 
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
+        _characterController = GetComponent<UnityEngine.CharacterController>();
         Inventory.ItemUsed += Inventory_ItemUsed;
         Inventory.ItemRemoved += Inventory_ItemRemoved;
 
