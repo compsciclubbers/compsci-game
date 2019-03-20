@@ -10,6 +10,8 @@ public class SpiderMovement : DamagableEntity
     public float distanceUntilChase;
     private Collider flag;
     private double startTime;
+    public float gravityScale = 4f;
+    public float globalGravity = -9.8f;
     public SpiderMovement() : this(10, 2, "Spider")
     {}
 
@@ -35,6 +37,7 @@ public class SpiderMovement : DamagableEntity
         {
             gameObject.SetActive(false);
         }
+        useGravity();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,7 +50,7 @@ public class SpiderMovement : DamagableEntity
             startTime = Time.time;
         }
       
-        else if (collision.gameObject.tag != "Ground" && now - startTime > 0.5)
+        else if (collision.gameObject.tag != "Ground" && now - startTime > 0.5 && collision.gameObject.transform.position.y + 2 > transform.position.y)
         {
             jumpOverObstacle();
             startTime = Time.time;
@@ -63,6 +66,12 @@ public class SpiderMovement : DamagableEntity
     private void knockBack()
     {
         GetComponent<Rigidbody>().AddForce(0, 250, 0);
-        GetComponent<Rigidbody>().AddForce(transform.forward * -300);
+        GetComponent<Rigidbody>().AddForce(transform.forward * -600);
+    }
+    void useGravity()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        Vector3 g = globalGravity * gravityScale * Vector3.up;
+        rb.AddForce(g, ForceMode.Acceleration);
     }
 }
