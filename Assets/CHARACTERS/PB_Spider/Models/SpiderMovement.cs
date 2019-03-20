@@ -22,6 +22,10 @@ public class SpiderMovement : DamagableEntity
     }
 
 
+    private void Start()
+    {
+        Speed = Speed * Time.deltaTime;
+    }
     void Update()
     {
         // if ((target.transform.position - this.transform.position).sqrMagnitude < distanceUntilChase)
