@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class inventoryScript : MonoBehaviour
 {
@@ -12,11 +14,17 @@ public class inventoryScript : MonoBehaviour
     private int currIndex = 0;
     private double startTime;
     private double curr;
+    private GameObject subinventory;
+    private GameObject[] sub;
+    private Sprite[] swap;
     void Start()
     {
+        subinventory = GameObject.FindGameObjectWithTag("Subinventory");
         inventory.SetActive(false);
         allSlots = 9;
         slot = new GameObject[allSlots];
+        sub = new GameObject[2];
+        swap = new Sprite[2];
         for (int i = 0; i < allSlots; i++)
         {
             slot[i] = inventory.transform.GetChild(i).gameObject;
@@ -30,6 +38,11 @@ public class inventoryScript : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown("i"))
+        {
+            inventory.SetActive(!inventory.active);
+            subinventory.SetActive(!subinventory.active);
+        }
         if (inventory.active)
         {
             child = slot[currIndex].transform.GetChild(0).GetChild(0);
@@ -67,15 +80,57 @@ public class inventoryScript : MonoBehaviour
                 startTime = Time.time;
             }
 
-            if (Input.GetKey("return") && slot[currIndex].transform.childCount > 1)
-            { 
-                slot[currIndex].transform.GetChild(1).gameObject.GetComponent<Item>().itemUsage();
+            if (Input.GetKey("q") && slot[currIndex].transform.childCount > 1)
+            {
+                if (sub[1] == slot[currIndex].transform.GetChild(1).gameObject && sub[0] != null)
+                {
+                    swap[1] = swap[0];
+                    swap[0] = slot[currIndex].transform.GetComponent<Slot>().icon;
+                    GameObject temp = sub[0];
+                    sub[0] = sub[1];
+                    sub[1] = temp;
+                    subinventory.transform.GetChild(0).GetComponent<Image>().sprite = swap[0];
+                    subinventory.transform.GetChild(1).GetComponent<Image>().sprite = swap[1];
+                }
+                else
+                {
+                    sub[0] = slot[currIndex].transform.GetChild(1).gameObject;
+                    swap[0] = slot[currIndex].transform.GetComponent<Slot>().icon;
+                    subinventory.transform.GetChild(0).GetComponent<Image>().sprite = swap[0]; 
+                }
+            }
+            if (Input.GetKey("e") && slot[currIndex].transform.childCount > 1)
+            {
+                if (sub[0] == slot[currIndex].transform.GetChild(1).gameObject && sub[1] != null)
+                {
+                    swap[0] = swap[1];
+                    swap[1] = slot[currIndex].transform.GetComponent<Slot>().icon;
+                    GameObject temp = sub[1];
+                    sub[1] = sub[0];
+                    sub[0] = temp;
+                    subinventory.transform.GetChild(1).GetComponent<Image>().sprite = swap[1];
+                    subinventory.transform.GetChild(0).GetComponent<Image>().sprite = swap[0];
+                }
+                else
+                {
+                    sub[1] = slot[currIndex].transform.GetChild(1).gameObject;
+                    swap[1] = slot[currIndex].transform.GetComponent<Slot>().icon;
+                    subinventory.transform.GetChild(1).GetComponent<Image>().sprite = swap[1];
+                }
             }
         }
-        if (Input.GetKeyDown(KeyCode.I))
+        else
         {
-            inventory.SetActive(!inventory.active);
+            if (Input.GetKeyDown("q") && sub[0] != null)
+            {
+                sub[0].GetComponent<Item>().itemUsage();
+            }
+            if (Input.GetKeyDown("e") && sub[1] != null)
+            {
+                sub[1].GetComponent<Item>().itemUsage();
+            }
         }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -104,8 +159,7 @@ public class inventoryScript : MonoBehaviour
                 slot[i].GetComponent<Slot>().updateSlot();
                 slot[i].GetComponent<Slot>().empty = false;
                 return;
-            }
-            
+            }            
         }
     }
 }

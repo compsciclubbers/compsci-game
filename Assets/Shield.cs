@@ -18,21 +18,23 @@ public class Shield : MonoBehaviour
     
     void OnCollisionEnter(Collision collision)
     {
-        print(collision.gameObject);
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
+        print("Collision ahhhh");
+        if (collision.gameObject.tag == "Player")
         {
-            print("ah");
+            print("cp");
             Physics.IgnoreCollision(collision.collider, gameObject.GetComponent<BoxCollider>());
         }
     }
+    /*
     void OnTriggerEnter(Collision collision)
     {
-        print(collision.gameObject);
+        print("Trigger ahhhhhhhhhh");
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
         {
-            print("ah");
+            print("tp");
             Physics.IgnoreCollision(collision.collider, gameObject.GetComponent<BoxCollider>());
         }
     }
+    */
 
 }
