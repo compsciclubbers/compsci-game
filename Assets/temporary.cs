@@ -23,5 +23,6 @@ public class temporary : DamagableEntity
         {
             gameObject.SetActive(false);
         }
+        updateHealth();
     }
 }

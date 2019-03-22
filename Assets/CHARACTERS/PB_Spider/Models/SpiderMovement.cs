@@ -24,13 +24,12 @@ public class SpiderMovement : DamagableEntity
 
     private void Start()
     {
-        Speed = Speed * Time.deltaTime;
     }
     void Update()
     {
         // if ((target.transform.position - this.transform.position).sqrMagnitude < distanceUntilChase)
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Speed * Time.deltaTime);
-            transform.LookAt(target.transform);
+        transform.LookAt(target.transform);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
         if (getHit())
         {
@@ -54,12 +53,12 @@ public class SpiderMovement : DamagableEntity
             startTime = Time.time;
         }
       
-        else if (collision.gameObject.tag != "Ground" && now - startTime > 0.5 && collision.gameObject.transform.position.y + 2 > transform.position.y)
+        else if (collision.gameObject.tag != "Ground" && now - startTime > 0.5 && collision.gameObject.transform.position.y + 1 > transform.position.y)
         {
             jumpOverObstacle();
             startTime = Time.time;
         }
-        
+        updateHealth();
         
     }
 
@@ -69,8 +68,8 @@ public class SpiderMovement : DamagableEntity
     }
     private void knockBack()
     {
-        GetComponent<Rigidbody>().AddForce(0, 250, 0);
-        GetComponent<Rigidbody>().AddForce(transform.forward * -600);
+        GetComponent<Rigidbody>().AddForce(0, 100, 0);
+        GetComponent<Rigidbody>().AddForce(transform.forward * -800);
     }
     void useGravity()
     {

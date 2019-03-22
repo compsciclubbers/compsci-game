@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class DamagableEntity : MonoBehaviour
 {
     public int hp;
+    private int maxhp;
     public int attdmg;
     public string type;
     public bool isDead;
@@ -15,6 +16,7 @@ public class DamagableEntity : MonoBehaviour
     public DamagableEntity(int c_hp, int c_attdmg, string c_type)
     {
         hp = c_hp;
+        maxhp = c_hp;
         attdmg = c_attdmg;
         type = c_type;
         isDead = false;
@@ -41,6 +43,19 @@ public class DamagableEntity : MonoBehaviour
         DamagableEntity rec = reciever.GetComponent<DamagableEntity>();
         rec.incomingDmg = attdmg;
         rec.damage();
+    }
+    public void updateHealth()
+    {
+        Image health = null;
+        foreach(Transform c in transform)
+        {
+            if(c.gameObject.tag == "Health")
+            {
+                health = c.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+            }
+        }
+        health.fillAmount = (float)hp / (float)maxhp;
+        health.color = new Color(((float)1 - health.fillAmount) * 255, (float)health.fillAmount * 255, 0, 255);
     }
     public bool getDead()
     {

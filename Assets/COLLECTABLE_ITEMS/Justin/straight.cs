@@ -5,13 +5,21 @@ using UnityEngine;
 
 
 public class StickyObject : MonoBehaviour
-{ 
+{
+    private double startTime = Time.time;
+
     void OnCollisionEnter(Collision c)
     {
+        Double now = Time.time;
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        
+        if(c.gameObject.tag == "Enemy" && now - startTime > 1)
+        {
+            c.gameObject.GetComponent<DamagableEntity>().incomingDmg = 1;
+            c.gameObject.GetComponent<DamagableEntity>().damage();
+            startTime = Time.time;
+        }
         //rb.detectCollisions = false;
         //var joint = gameObject.AddComponent<FixedJoint>();
         //joint.connectedBody = c.rigidbody;

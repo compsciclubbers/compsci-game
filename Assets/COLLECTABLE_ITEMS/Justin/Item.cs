@@ -22,11 +22,15 @@ public class Item : MonoBehaviour
     Transform player;
     Vector3 playerPos;
     Animator anim;
+    private int useCount;
     private bool isSwinging = false;
+    private double cooldownTimer;
     void Start()
     {
+        cooldownTimer = -30;
+        useCount = 0;
         startTime2 = Time.time;
-        sworddmg = 2;
+        sworddmg = 3;
         placed = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerPos = transform.localPosition;
@@ -52,8 +56,8 @@ public class Item : MonoBehaviour
         {
             double curr = Time.time - startTime;
             if (type == "cactusgun")
-            {   
-                if (Input.GetMouseButtonDown(0) && curr > .5)
+            {
+                if (Input.GetMouseButtonDown(0) && curr > 1 && useCount < 5 && curr - cooldownTimer > 30)
                 {
                     Transform itT = transform;
                     Vector3 ipos = itT.position;
@@ -64,6 +68,11 @@ public class Item : MonoBehaviour
                     GameObject spawned = Instantiate(helperItem, spawnp, irot);
                     spawned.SetActive(true);
                     startTime = Time.time;
+                    useCount++;
+                }
+                if(useCount >= 5)
+                {
+                    cooldownTimer = Time.time;
                 }
             }
             if(type == "stickymagnet")

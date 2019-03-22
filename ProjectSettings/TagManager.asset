@@ -13,6 +13,8 @@ TagManager:
   - Shield
   - Subinventory
   - Enemy
+  - Health
+  - Cactus
   layers:
   - Default
   - TransparentFX
