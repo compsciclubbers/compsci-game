@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37e412f3502894c4c928d6774b0592ac
+guid: 2681ed536e399394fba4f0cefb1fe55f
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -9,7 +9,12 @@ ModelImporter:
     3300000: //RootNode
     4300000: Rock_01
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Vertex COlor
+    second: {fileID: 2100000, guid: c1675ecfea51eca41b0586f746ca9fff, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e7464e6962c79794bbfcdb1d60ea5cd1
+guid: 4054fea9c2cee104a94eb1408b4c606e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -9,7 +9,12 @@ ModelImporter:
     3300000: //RootNode
     4300000: Cactus_01
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Vertex COlor
+    second: {fileID: 2100000, guid: c1675ecfea51eca41b0586f746ca9fff, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

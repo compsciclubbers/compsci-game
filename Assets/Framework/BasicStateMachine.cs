@@ -5,7 +5,7 @@
 public abstract class BasicStateMachine<S> : UnityEngine.MonoBehaviour where S : System.Enum
 {
 
-    private S lastState, currentState;
+    public S lastState, currentState;
 
     public BasicStateMachine(S initialState)
     {
