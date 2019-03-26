@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Wavemanager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class Wavemanager : MonoBehaviour
     private int shamt;
     public int numberOfEnemies;
     private bool waveFinished;
+    private double startTime;
+    private GameObject wavecanvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,8 @@ public class Wavemanager : MonoBehaviour
         smspamt = 6;
         shamt = 3;
         waveFinished = true;
+        startTime = Time.time;
+        wavecanvas = GameObject.FindGameObjectWithTag("WaveCanvas");
     }
 
     // Update is called once per frame
@@ -42,10 +47,23 @@ public class Wavemanager : MonoBehaviour
         }
         if (waveFinished)
         {
-            startWave();
+            if (Time.time - startTime > 1.5)
+            {
+                wavecanvas.SetActive(false);
+                startWave();
+            }
+            else
+            {
+               wavecanvas.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Wave " + currentWave;
+               wavecanvas.SetActive(true); 
+            }
             
         }
-        if(numberOfEnemies < 3 && !waveFinished)
+        else
+        {
+            startTime = Time.time;
+        }
+        if(numberOfEnemies < 2 && !waveFinished)
         {
             endWave();
         }
