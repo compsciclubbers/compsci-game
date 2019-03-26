@@ -25,6 +25,7 @@ public class Item : MonoBehaviour
     private int useCount;
     private bool isSwinging = false;
     private double cooldownTimer;
+    private bool initShield = true;
     void Start()
     {
         cooldownTimer = -30;
@@ -54,10 +55,10 @@ public class Item : MonoBehaviour
     {
         if (equipped)
         {
-            double curr = Time.time - startTime;
+            double curr = Time.time;
             if (type == "cactusgun")
             {
-                if (Input.GetMouseButtonDown(0) && curr > 1 && useCount < 5 && curr - cooldownTimer > 30)
+                if (Input.GetMouseButtonDown(0) && curr - startTime > 1 && useCount < 5 && curr - cooldownTimer > 20)
                 {
                     Transform itT = transform;
                     Vector3 ipos = itT.position;
@@ -73,6 +74,7 @@ public class Item : MonoBehaviour
                 if(useCount >= 5)
                 {
                     cooldownTimer = Time.time;
+                    useCount = 0;
                 }
             }
             if(type == "stickymagnet")
@@ -80,7 +82,7 @@ public class Item : MonoBehaviour
                 if (Input.GetMouseButtonDown(0) && curr > .5)
                 {
                     float spawnDistance = 3;
-                    GameObject spawned = Instantiate(helperItem, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().position + transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().forward * 3, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().rotation);
+                    GameObject spawned = Instantiate(helperItem, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().position + transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().forward * spawnDistance, transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().rotation);
                     spawned.SetActive(true);
                     startTime = Time.time;
                 }
@@ -97,24 +99,31 @@ public class Item : MonoBehaviour
             }
             if(type == "shield")
             {
-                
+                if (initShield)
+                {
+                    GetComponent<Rigidbody>().useGravity = false;
+                    GetComponent<Rigidbody>().isKinematic = true;
+                    transform.localPosition = playerPos;
+                    transform.rotation = player.rotation;
+                    placed = false;
+                    initShield = false;
+                }
                 if (Input.GetMouseButtonDown(0) && curr > .5)
                 {
                     Vector3 itpos = transform.position;
                     Vector3 itmanpos = itemManager.transform.position;
                     if (!placed)
                     {
-                        GetComponent<BoxCollider>().isTrigger = false;
                         transform.parent = null;
                         GetComponent<Rigidbody>().useGravity = true;
+                        GetComponent<Rigidbody>().isKinematic = false;
                         GetComponent<Rigidbody>().freezeRotation = true;
                         placed = true;
                     }   
                     else if(Math.Abs(itpos.x - itmanpos.x) + Math.Abs(itpos.y - itmanpos.y) + Math.Abs(itpos.z - itmanpos.z) < 7)
                     {
-                        GetComponent<BoxCollider>().isTrigger = true;
                         GetComponent<Rigidbody>().useGravity = false;
-                        GetComponent<Rigidbody>().useGravity = false;
+                        GetComponent<Rigidbody>().isKinematic = true;
                         transform.parent = itemManager.transform;
                         transform.localPosition = playerPos;
                         transform.rotation = player.rotation;
@@ -145,10 +154,6 @@ public class Item : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if(other.gameObject.tag == "Enemy" && type == "sword")
-        {
-            print("enemy");
-        }
         if(other.gameObject.tag == "Enemy" && type == "sword" && isSwinging && Time.time - startTime2 > 0.5)
         {
             DamagableEntity enemy = other.gameObject.GetComponent<DamagableEntity>();

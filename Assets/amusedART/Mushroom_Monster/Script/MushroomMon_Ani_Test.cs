@@ -11,14 +11,14 @@ public class MushroomMon_Ani_Test : DamagableEntity {
 	public const string DEATH	= "Death";
     [Header("AI settings")]
     public GameObject target;
-    private float Speed = 5;
+    private float Speed = 4;
     public float distanceUntilChase;
     private double startTime;
     Animation anim;
     private double attLength;
     private bool justAttacked;
     private GameObject attackedObj;
-    public MushroomMon_Ani_Test() : this(6, 2, "shroom")
+    public MushroomMon_Ani_Test() : this(8, 2, "shroom")
     {
 
     }

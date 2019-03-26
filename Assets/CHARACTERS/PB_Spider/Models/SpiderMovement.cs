@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class SpiderMovement : DamagableEntity
 {
@@ -12,11 +13,13 @@ public class SpiderMovement : DamagableEntity
     private double startTime;
     public float gravityScale = 4f;
     public float globalGravity = -9.8f;
-    public SpiderMovement() : this(10, 2, "Spider")
+    
+    public SpiderMovement() : this(15, 2, "Spider")
     {}
 
     public SpiderMovement(int hp, int dmg, string type): base(hp, dmg, type)
     {
+       
         flag = GetComponent<Collider>();
         startTime = Time.time;
     }
@@ -33,6 +36,7 @@ public class SpiderMovement : DamagableEntity
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
         if (getHit())
         {
+            //renderer.material.color = new Color(255, 0, 0);
             knockBack();
             setHit(false);
         }
@@ -48,7 +52,7 @@ public class SpiderMovement : DamagableEntity
         double now = Time.time;
         if (collision.gameObject.tag == "Player" && now - startTime > 0.5)
         {
-            //knockBack();
+            knockBack();
             dealDamage(collision.gameObject);
             startTime = Time.time;
         }
