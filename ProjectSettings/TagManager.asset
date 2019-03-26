@@ -15,6 +15,7 @@ TagManager:
   - Enemy
   - Health
   - Cactus
+  - WaveCheck
   layers:
   - Default
   - TransparentFX

@@ -1,58 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
-public class SpiderMovement : DamagableEntity
+public class Smallspider : DamagableEntity
 {
     [Header("AI settings")]
     public GameObject target;
     public float Speed;
     public float distanceUntilChase;
+    private Collider flag;
     private double startTime;
     public float gravityScale = 4f;
     public float globalGravity = -9.8f;
-    private double spawnTimer;
-    public GameObject small;
+    public bool wave;
     public float offset;
     private Vector3 offsetTarget;
     private double offTime;
-    public SpiderMovement() : this(15, 2, "Spider")
-    {}
+    public Smallspider() : this(3, 1, "Spider")
+    { }
 
-    public SpiderMovement(int hp, int dmg, string type): base(hp, dmg, type)
+    public Smallspider(int hp, int dmg, string type) : base(hp, dmg, type)
+    {
+        wave = true;
+    }
+    // Start is called before the first frame update
+    void Start()
     {
         startTime = Time.time;
         offTime = Time.time;
     }
 
-
-    private void Start()
-    {
-        spawnTimer = Time.time;
-    }
+    // Update is called once per frame
     void Update()
     {
-        double now = Time.time;
-        if(now - spawnTimer > 20)
-        {
-            GameObject littleboy = Instantiate(small, transform.position + transform.forward * 6, Quaternion.identity);
-            littleboy.SetActive(true);
-            littleboy.GetComponent<Smallspider>().wave = false;
-            littleboy = Instantiate(small, transform.position - transform.forward * 6, Quaternion.identity);
-            littleboy.SetActive(true);
-            littleboy.GetComponent<Smallspider>().wave = false;
-            spawnTimer = now;
-        }
         // if ((target.transform.position - this.transform.position).sqrMagnitude < distanceUntilChase)
-        if (Time.time - offTime > 2)
+        if(Time.time - offTime > .3)
         {
             setOffset();
             offTime = Time.time;
         }
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, offsetTarget, Speed * Time.deltaTime);
         transform.LookAt(offsetTarget);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
+        updateHealth();
         if (getHit())
         {
             //renderer.material.color = new Color(255, 0, 0);
@@ -63,12 +53,14 @@ public class SpiderMovement : DamagableEntity
         if (getDead())
         {
             DestroyImmediate(gameObject);
-            GameObject.FindGameObjectWithTag("WaveCheck").GetComponent<Wavemanager>().numberOfEnemies--;
-            //gameObject.SetActive(false);
+            //gameObject.SetActive(false);  
+            if (wave)
+            {
+                GameObject.FindGameObjectWithTag("WaveCheck").GetComponent<Wavemanager>().numberOfEnemies--;
+            }
         }
         
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         double now = Time.time;
@@ -78,14 +70,14 @@ public class SpiderMovement : DamagableEntity
             dealDamage(collision.gameObject);
             startTime = Time.time;
         }
-      
+
         else if (collision.gameObject.tag != "Ground" && now - startTime > 0.5 && collision.gameObject.transform.position.y + 1 > transform.position.y)
         {
             jumpOverObstacle();
             startTime = Time.time;
         }
-        updateHealth();
         
+
     }
 
     private void jumpOverObstacle()
