@@ -15,12 +15,15 @@ public class AnimationController : BasicStateMachine<CharacterState>
     public float kMaxAccel;
     public float rotationSpeed;
     public float jumpSpeed;
+    public float maxGravityVel;
+
 
     private Animator animator;
     private InputController inputController;
     private Rigidbody rb;
 
     private int jumpCount = 0;
+    public bool isGround = false;
     public Vector3 currentVelocity = Vector3.zero;
 
     public AnimationController() : base(CharacterState.Idle)
@@ -49,11 +52,10 @@ public class AnimationController : BasicStateMachine<CharacterState>
 
     void Update()
     {
-        // Zero out current velocity
-        currentVelocity = Vector3.zero;
 
         currentVelocity = Vector3.MoveTowards(currentVelocity, inputController.GetMoveInput() * kMoveSpeed, kMaxAccel * Time.deltaTime);
-        Vector3 moveDelta = Vector3.Scale(currentVelocity, new Vector3(1.0f, 0.0f, 1.0f)) * Time.deltaTime;
+        Vector3 scalar = new Vector3(1.0f, 1.0f, 1.0f);
+        Vector3 moveDelta = Vector3.Scale(currentVelocity, scalar * Time.deltaTime);
         transform.position += moveDelta;
 
         HandleCurrentState(GetCurrentState());
@@ -65,8 +67,8 @@ public class AnimationController : BasicStateMachine<CharacterState>
         switch (requestedState)
         {
             case CharacterState.Jump:
-                animator.SetInteger("Jumping", 1);
                 animator.SetTrigger("JumpTrigger");
+                animator.SetBool("Moving", false);
                 currentVelocity += new Vector3(0.0f, jumpSpeed, 0.0f);
                 break;
         }
@@ -80,6 +82,7 @@ public class AnimationController : BasicStateMachine<CharacterState>
         {
             case CharacterState.Move:
                 animator.SetBool("Moving", true);
+                animator.SetInteger("Jumping", 0);
 
                 if (inputController.isStrafing())
                 {
@@ -95,16 +98,37 @@ public class AnimationController : BasicStateMachine<CharacterState>
 
                 break;
             case CharacterState.Jump:
+                animator.SetInteger("Jumping", 1);
+                animator.SetFloat("Velocity Z", currentVelocity.magnitude);
+
                 break;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            RequestState(CharacterState.Move);
+            isGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGround = false;
         }
     }
 
     private void SetDefaults()
     {
-        kMoveSpeed = 300.0f;
-        kMaxAccel = 300.0f;
-        rotationSpeed = 20.0f;
-        jumpSpeed = 300.0f;
+        kMoveSpeed = 10;
+        kMaxAccel = 10;
+        rotationSpeed = 10;
+        jumpSpeed = 30;
+        maxGravityVel = 10;
     }
 
 }

@@ -18,6 +18,7 @@ public abstract class BasicStateMachine<S> : UnityEngine.MonoBehaviour where S :
     
     public void RequestState(S requestedState)
     {
+        lastState = currentState;
         if(!requestedState.Equals(currentState))
         {
             currentState = HandleRequestedState(requestedState);
