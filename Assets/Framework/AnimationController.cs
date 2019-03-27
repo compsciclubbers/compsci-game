@@ -69,6 +69,8 @@ public class AnimationController : BasicStateMachine<CharacterState>
             case CharacterState.Jump:
                 animator.SetTrigger("JumpTrigger");
                 animator.SetBool("Moving", false);
+                animator.SetInteger("Jumping", 1);
+
                 currentVelocity += new Vector3(0.0f, jumpSpeed, 0.0f);
                 break;
         }
@@ -98,8 +100,7 @@ public class AnimationController : BasicStateMachine<CharacterState>
 
                 break;
             case CharacterState.Jump:
-                animator.SetInteger("Jumping", 1);
-                animator.SetFloat("Velocity Z", currentVelocity.magnitude);
+                animator.SetFloat("Velocity Z", GetComponent<Rigidbody>().velocity.magnitude);
 
                 break;
         }
@@ -127,7 +128,7 @@ public class AnimationController : BasicStateMachine<CharacterState>
         kMoveSpeed = 10;
         kMaxAccel = 10;
         rotationSpeed = 10;
-        jumpSpeed = 30;
+        jumpSpeed = 10;
         maxGravityVel = 10;
     }
 
