@@ -55,7 +55,7 @@ public class inventoryScript : MonoBehaviour
                 }
             }
             curr = Time.time - startTime;
-            if (Input.GetKey("left") && curr > .1)
+            if (Input.GetKey("left") && curr > .2)
             {
                 if (currIndex == 0)
                 {
@@ -67,7 +67,7 @@ public class inventoryScript : MonoBehaviour
                 }
                 startTime = Time.time;
             }
-            if (Input.GetKey("right") && curr > .1)
+            if (Input.GetKey("right") && curr > .2)
             {
                 if (currIndex == allSlots - 1)
                 {

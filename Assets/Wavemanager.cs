@@ -8,7 +8,7 @@ public class Wavemanager : MonoBehaviour
     public GameObject spider;
     public GameObject smallSpider;
     public GameObject shroom;
-    private int currentWave;
+    public int currentWave;
     private bool spsp;
     private bool smspsp;
     private bool shsp;
@@ -101,7 +101,7 @@ public class Wavemanager : MonoBehaviour
         }
         if (smspsp)
         {
-            int loopTimes = smspamt + currentWave / 2;
+            int loopTimes = smspamt + currentWave / 4;
             for (int i = 0; i < loopTimes; i++)
             {
                 float randx = Random.Range(50, 155);
