@@ -55,7 +55,18 @@ public class DamagableEntity : MonoBehaviour
             }
         }
         health.fillAmount = (float)hp / (float)maxhp;
-        health.color = new Color(((float)1 - health.fillAmount) * 255, (float)health.fillAmount * 255, 0, 255);
+        if(health.fillAmount > .65)
+        {
+            health.color = new Color(0, (float)health.fillAmount * 255, 0, 255);
+        }
+        else if(health.fillAmount > .3)
+        {
+            health.color = new Color(((float)1 - health.fillAmount) * 255, (float)health.fillAmount * 255, 0, 255);
+        }
+        else
+        {
+            health.color = new Color(((float)1 - health.fillAmount) * 255, 0, 0, 255);
+        }
     }
     public bool getDead()
     {

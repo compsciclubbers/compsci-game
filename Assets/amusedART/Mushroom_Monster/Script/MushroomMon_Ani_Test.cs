@@ -11,14 +11,15 @@ public class MushroomMon_Ani_Test : DamagableEntity {
 	public const string DEATH	= "Death";
     [Header("AI settings")]
     public GameObject target;
-    private float Speed = 5;
+    public float Speed = 4;
     public float distanceUntilChase;
     private double startTime;
     Animation anim;
     private double attLength;
     private bool justAttacked;
     private GameObject attackedObj;
-    public MushroomMon_Ani_Test() : this(6, 2, "shroom")
+    public int offset;
+    public MushroomMon_Ani_Test() : this(8, 2, "shroom")
     {
 
     }
@@ -44,17 +45,21 @@ public class MushroomMon_Ani_Test : DamagableEntity {
             knockBack();
             setHit(false);  
         }
-        if (getDead())
-        {
-            gameObject.SetActive(false);
-        }
-        if(attLength <= Time.time && justAttacked)
+        if (attLength <= Time.time && justAttacked)
         {
             knockBack();
             dealDamage(attackedObj);
             justAttacked = false;
         }
         updateHealth();
+        if (getDead())
+        {
+            DeathAni();
+            //gameObject.SetActive(false);
+            DestroyImmediate(gameObject);
+            GameObject.FindGameObjectWithTag("WaveCheck").GetComponent<Wavemanager>().numberOfEnemies--;
+        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)
