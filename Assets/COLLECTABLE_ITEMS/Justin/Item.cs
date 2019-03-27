@@ -58,7 +58,7 @@ public class Item : MonoBehaviour
             double curr = Time.time;
             if (type == "cactusgun")
             {
-                if (Input.GetMouseButtonDown(0) && curr - startTime > 1 && useCount < 5 && curr - cooldownTimer > 20)
+                if (Input.GetMouseButtonDown(0) && curr - startTime > .6 && useCount < 5 && curr - cooldownTimer > 20)
                 {
                     Transform itT = transform;
                     Vector3 ipos = itT.position;

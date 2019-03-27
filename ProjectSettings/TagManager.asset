@@ -17,6 +17,7 @@ TagManager:
   - Cactus
   - WaveCheck
   - WaveCanvas
+  - Healer
   layers:
   - Default
   - TransparentFX
