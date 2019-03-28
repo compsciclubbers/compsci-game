@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MushroomMon_Ani_Test : DamagableEntity {
+    private AudioSource takeDamage;
 
 	public const string IDLE	= "Idle";
 	public const string RUN		= "Run";
@@ -30,6 +31,8 @@ public class MushroomMon_Ani_Test : DamagableEntity {
         justAttacked = false;
     }
 	void Start () {
+        takeDamage = GetComponent<AudioSource>();
+
         startTime = Time.time;
         anim = GetComponent<Animation>();
 	}
@@ -42,6 +45,8 @@ public class MushroomMon_Ani_Test : DamagableEntity {
 
         if (getHit())
         {
+            takeDamage.Play();
+
             knockBack();
             setHit(false);  
         }

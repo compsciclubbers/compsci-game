@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Smallspider : DamagableEntity
 {
+    private AudioSource tookDamage;
+
     [Header("AI settings")]
     public GameObject target;
     public float Speed;
@@ -26,6 +28,8 @@ public class Smallspider : DamagableEntity
     // Start is called before the first frame update
     void Start()
     {
+        tookDamage = GetComponent<AudioSource>();
+
         startTime = Time.time;
         offTime = Time.time;
     }
@@ -45,6 +49,8 @@ public class Smallspider : DamagableEntity
         updateHealth();
         if (getHit())
         {
+            tookDamage.Play();
+
             //renderer.material.color = new Color(255, 0, 0);
             knockBack();
             setHit(false);
