@@ -79,7 +79,7 @@ public class SpiderMovement : DamagableEntity
             startTime = Time.time;
         }
       
-        else if (collision.gameObject.tag != "Ground" && now - startTime > 0.5 && collision.gameObject.transform.position.y + 1 > transform.position.y)
+        else if (collision.gameObject.tag != "Ground" && now - startTime > 0.1 && collision.gameObject.transform.position.y + 1 > transform.position.y)
         {
             jumpOverObstacle();
             startTime = Time.time;
@@ -90,7 +90,7 @@ public class SpiderMovement : DamagableEntity
 
     private void jumpOverObstacle()
     {
-        GetComponent<Rigidbody>().AddForce(0, 1200, 0);
+        GetComponent<Rigidbody>().AddForce(0, 400, 0);
     }
     private void knockBack()
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MushroomMon_Ani_Test : DamagableEntity {
+    private AudioSource takeDamage;
 
 	public const string IDLE	= "Idle";
 	public const string RUN		= "Run";
@@ -30,6 +31,8 @@ public class MushroomMon_Ani_Test : DamagableEntity {
         justAttacked = false;
     }
 	void Start () {
+        takeDamage = GetComponent<AudioSource>();
+
         startTime = Time.time;
         anim = GetComponent<Animation>();
 	}
@@ -42,6 +45,8 @@ public class MushroomMon_Ani_Test : DamagableEntity {
 
         if (getHit())
         {
+            takeDamage.Play();
+
             knockBack();
             setHit(false);  
         }
@@ -65,15 +70,15 @@ public class MushroomMon_Ani_Test : DamagableEntity {
     private void OnCollisionEnter(Collision collision)
     {
         double now = Time.time;
-        if (collision.gameObject.tag == "Player" && now - startTime > 0.5)
+        if (collision.gameObject.tag == "Player" && now - startTime > 0.3)
         {
             attackedObj = collision.gameObject;
             AttackAni();
             startTime = Time.time;
         }
-        else if(collision.gameObject.tag != "Ground" && now - startTime > 0.5)
+        else if(collision.gameObject.tag != "Ground" && now - startTime > 0.1)
         {
-            GetComponent<Rigidbody>().AddForce(0, 400, 0);
+            GetComponent<Rigidbody>().AddForce(0, 200, 0);
             startTime = Time.time;
         }
     }

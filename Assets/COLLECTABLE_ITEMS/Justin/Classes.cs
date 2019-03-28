@@ -47,6 +47,10 @@ public class DamagableEntity : MonoBehaviour
     public void updateHealth()
     {
         Image health = null;
+        if(hp > maxhp)
+        {
+            hp = maxhp;
+        }
         foreach(Transform c in transform)
         {
             if(c.gameObject.tag == "Health")

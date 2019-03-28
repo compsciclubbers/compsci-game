@@ -14,9 +14,9 @@ public class StickyObject : MonoBehaviour
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        if(c.gameObject.tag == "Enemy" && now - startTime > 1)
+        if(c.gameObject.tag == "Enemy" && now - startTime > .75)
         {
-            c.gameObject.GetComponent<DamagableEntity>().incomingDmg = 1;
+            c.gameObject.GetComponent<DamagableEntity>().incomingDmg = 2;
             c.gameObject.GetComponent<DamagableEntity>().damage();
             startTime = Time.time;
         }

@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class inventoryScript : MonoBehaviour
 {
+    private AudioSource inventoryClick;
+
     public GameObject inventory;
     private int allSlots;
     private int enabledSlots;
@@ -19,6 +21,8 @@ public class inventoryScript : MonoBehaviour
     private Sprite[] swap;
     void Start()
     {
+        inventoryClick = GetComponent<AudioSource>();
+
         subinventory = GameObject.FindGameObjectWithTag("Subinventory");
         inventory.SetActive(false);
         allSlots = 9;
@@ -40,6 +44,8 @@ public class inventoryScript : MonoBehaviour
     {
         if (Input.GetKeyDown("i"))
         {
+            inventoryClick.Play();
+
             inventory.SetActive(!inventory.active);
             subinventory.SetActive(!subinventory.active);
         }
@@ -55,7 +61,7 @@ public class inventoryScript : MonoBehaviour
                 }
             }
             curr = Time.time - startTime;
-            if (Input.GetKey("left") && curr > .1)
+            if (Input.GetKey("left") && curr > .2)
             {
                 if (currIndex == 0)
                 {
@@ -67,7 +73,7 @@ public class inventoryScript : MonoBehaviour
                 }
                 startTime = Time.time;
             }
-            if (Input.GetKey("right") && curr > .1)
+            if (Input.GetKey("right") && curr > .2)
             {
                 if (currIndex == allSlots - 1)
                 {

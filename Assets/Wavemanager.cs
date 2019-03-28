@@ -8,7 +8,7 @@ public class Wavemanager : MonoBehaviour
     public GameObject spider;
     public GameObject smallSpider;
     public GameObject shroom;
-    private int currentWave;
+    public int currentWave;
     private bool spsp;
     private bool smspsp;
     private bool shsp;
@@ -19,6 +19,10 @@ public class Wavemanager : MonoBehaviour
     private bool waveFinished;
     private double startTime;
     private GameObject wavecanvas;
+    public GameObject cactusgun;
+    public GameObject shield;
+    public GameObject magnet;
+    public GameObject healer;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,24 +30,34 @@ public class Wavemanager : MonoBehaviour
         spsp = false;
         smspsp = true;
         shsp = false;
-        spamt = 1;
+        spamt = 0;
         smspamt = 6;
-        shamt = 3;
+        shamt = 2;
         waveFinished = true;
         startTime = Time.time;
         wavecanvas = GameObject.FindGameObjectWithTag("WaveCanvas");
+        cactusgun.SetActive(false);
+        shield.SetActive(false);
+        magnet.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if(currentWave >= 2)
         {
+            shield.SetActive(true);
             shsp = true;
         }
         if(currentWave >= 3)
         {
+            cactusgun.SetActive(true);
             spsp = true;
+        }
+        if(currentWave >= 4)
+        {
+            magnet.SetActive(true);
         }
         if (waveFinished)
         {
@@ -75,7 +89,7 @@ public class Wavemanager : MonoBehaviour
         numberOfEnemies = 0;
         if (spsp)
         {
-            int loopTimes = spamt + currentWave / 2;
+            int loopTimes = spamt  + (currentWave - 1) / 2;
             for (int i = 0; i < loopTimes; i++)
             {
                 float randx = Random.Range(50, 155);
@@ -87,7 +101,7 @@ public class Wavemanager : MonoBehaviour
         }
         if (smspsp)
         {
-            int loopTimes = smspamt + currentWave / 2;
+            int loopTimes = smspamt + currentWave / 4;
             for (int i = 0; i < loopTimes; i++)
             {
                 float randx = Random.Range(50, 155);
@@ -99,7 +113,7 @@ public class Wavemanager : MonoBehaviour
         }
         if (shsp)
         {
-            int loopTimes = shamt + currentWave;
+            int loopTimes = shamt + currentWave / 2;
             for (int i = 0; i < loopTimes; i++)
             {
                 float randx = Random.Range(50, 155);
@@ -113,6 +127,7 @@ public class Wavemanager : MonoBehaviour
     }
     private void endWave()
     {
+        healer.SetActive(true);
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             if (obj.activeSelf)
